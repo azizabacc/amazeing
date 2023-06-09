@@ -1,42 +1,4 @@
-const LEVEL_1 = [
-  ["*","*","*","*","*","*","*","*","*","*","*",".","*"],
-  ["*","S",".",".",".",".",".","*","*",".","*",".","T"],
-  ["*","*","*","*","*",".",".",".",".",".","*",".","*"],
-  ["*","*","*","*","*",".","*","*","*",".","*",".","*"],
-  ["*","*","*","*","*",".","*","*","*","*","*",".","*"],
-  ["*","*","*","*","*",".","*","*","*","*","*",".","*"],
-  ["*","*","*","*","*",".",".",".",".",".",".",".","*"],
-  ["*","*","*","*","*",".","*","*","*","*","*","*","*"],
-  ["*",".",".",".",".",".",".",".",".",".","*","*","*"],
-  ["*",".","*","*","*","*","*","*",".",".",".","*","*"],
-  ["*",".",".",".",".","*","*","*","*","*","*","*","*"],
-  ["*","*","*","*","*","*","*","*","*","*","*","*","*"]
-]
-
-const LEVEL_2 = [
-  ["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],
-  ["*",".",".","S",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","*"],
-  ["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*",".","*"],
-  ["*",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","*"],
-  ["*",".","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],
-  ["*",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","T"],
-  ["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"]
-]
-
-const LEVEL_3 = [
-  ["*","*","*","*","*","*","*","*"],
-  ["*","*","*","*","S","*","*","*"],
-  ["*","*","*","*",".","*","*","*"],
-  ["*","*","*","*",".","*","*","*"],
-  ["*","*","*","*",".","*","*","*"],
-  ["*",".",".",".",".",".",".","*"],
-  ["*",".","*","*","*","*",".","*"],
-  ["*",".",".","*","*","*",".","*"],
-  ["*",".",".","*","*","*",".","*"],
-  ["*","*",".","*","*","*","*","*"],
-  ["*","T",".","*","*","*","*","*"],
-  ["*","*","*","*","*","*","*","*"]
-]
+import { LEVEL_1, LEVEL_2, LEVEL_3 } from './levels.js';
 function switchClass(element1, element2) {
   const tempClass = element1.className;
   element1.className = element2.className;
@@ -86,77 +48,39 @@ function createMaze(LIST) {
 
 player.style.backgroundImage = "url(images/aziza.png)";
 main.appendChild(mazeContainer);
-
+//update player position 
+const updatePlayerPosition =(i,offset)=>{
+  mazeContainer.children[i].style.backgroundImage="url(images/green.png)"
+  mazeContainer.children[i+offset].style.backgroundImage="url(images/aziza.png)"
+};
+//move function
+function move(offset) {
+  let index = 0;
+  for (let i = 0; i < mazeContainer.children.length + 1; i++) {
+    if (mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i + offset].classList.contains('path')) {
+      switchClass(mazeContainer.children[i], mazeContainer.children[i + offset]);
+      updatePlayerPosition(i , offset);
+      index = i;
+      console.log("Position de div.end :", index);
+      break;
+    } else if (mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i + offset].classList.contains('end')) {
+      alert("we have a winner ! ")
+      break;
+    }
+  }
+}
 // Call the createMaze function to generate the maze
 createMaze(LEVEL_1);
 document.addEventListener("keydown", function(event) {
   if (event.code === "ArrowRight") {
-    let index = 0;
-    for (let i = 0; i < mazeContainer.children.length-1; i++) {
-      if (mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i+1].classList.contains('path')) {
-        switchClass(mazeContainer.children[i],mazeContainer.children[i+1])
-        mazeContainer.children[i].style.backgroundImage="url(images/green.png)"
-        mazeContainer.children[i+1].style.backgroundImage="url(images/aziza.png)"
-        index = i;
-        console.log("Position de div.end :", index);
-        break;
-      }else if(mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i+1].classList.contains('end')){
-        alert("we have a winner ! ")
-        break;
-      }
-    }
-  }
-  else if (event.code === "ArrowLeft") {
-    let index = 0;
-    for (let i = 0; i < mazeContainer.children.length+1; i++) {
-      if (mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i-1].classList.contains('path')) {
-        switchClass(mazeContainer.children[i],mazeContainer.children[i-1])
-        mazeContainer.children[i].style.backgroundImage="url(images/green.png)"
-        mazeContainer.children[i-1].style.backgroundImage="url(images/aziza.png)"
-        index = i;
-        console.log("Position de div.end :", index);
-        break;
-      }else if(mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i-1].classList.contains('end')){
-        alert("we have a winner ! ")
-        break;
-      }
-    }
-   
-  }
-  else if (event.code === "ArrowDown") {
-    let index = 0;
-    for (let i = 0; i < mazeContainer.children.length+1; i++) {
-      if (mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i+LEVEL_1[0].length].classList.contains('path')) {
-        switchClass(mazeContainer.children[i],mazeContainer.children[i+LEVEL_1[0].length])
-        mazeContainer.children[i].style.backgroundImage="url(images/green.png)"
-        mazeContainer.children[i+LEVEL_1[0].length].style.backgroundImage="url(images/aziza.png)"
-        index = i;
-        console.log("Position de div.end :", index);
-        break;
-      }else if(mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i+LEVEL_1[0].length].classList.contains('end')){
-        alert("we have a winner ! ")
-        break;
-      }
-    }
-
-  }  else if (event.code === "ArrowUp") {
-    let index = 0;
-    for (let i = 0; i < mazeContainer.children.length+1; i++) {
-      if (mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i-LEVEL_1[0].length].classList.contains('path')) {
-        switchClass(mazeContainer.children[i],mazeContainer.children[i-LEVEL_1[0].length])
-        mazeContainer.children[i].style.backgroundImage="url(images/green.png)"
-        mazeContainer.children[i-LEVEL_1[0].length].style.backgroundImage="url(images/aziza.png)"
-        index = i;
-        console.log("Position de div.end :", index);
-        break;
-      }else if(mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i-LEVEL_1[0].length].classList.contains('end')){
-        alert("we have a winner ! ")
-        break;
-      }
-    }
-
+    move(1);
+  } else if (event.code === "ArrowLeft") {
+    move(-1);
+  } else if (event.code === "ArrowDown") {
+    move(LEVEL_1[0].length);
+  } else if (event.code === "ArrowUp") {
+    move(-LEVEL_1[0].length);
   }
 });
-
 
 
