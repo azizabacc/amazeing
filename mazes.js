@@ -100,6 +100,9 @@ document.addEventListener("keydown", function(event) {
         index = i;
         console.log("Position de div.end :", index);
         break;
+      }else if(mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i+1].classList.contains('end')){
+        alert("we have a winner ! ")
+        break;
       }
     }
   }
@@ -112,6 +115,9 @@ document.addEventListener("keydown", function(event) {
         mazeContainer.children[i-1].style.backgroundImage="url(images/aziza.png)"
         index = i;
         console.log("Position de div.end :", index);
+        break;
+      }else if(mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i-1].classList.contains('end')){
+        alert("we have a winner ! ")
         break;
       }
     }
@@ -127,6 +133,9 @@ document.addEventListener("keydown", function(event) {
         index = i;
         console.log("Position de div.end :", index);
         break;
+      }else if(mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i+LEVEL_1[0].length].classList.contains('end')){
+        alert("we have a winner ! ")
+        break;
       }
     }
 
@@ -139,6 +148,9 @@ document.addEventListener("keydown", function(event) {
         mazeContainer.children[i-LEVEL_1[0].length].style.backgroundImage="url(images/aziza.png)"
         index = i;
         console.log("Position de div.end :", index);
+        break;
+      }else if(mazeContainer.children[i].classList.contains('player') && mazeContainer.children[i-LEVEL_1[0].length].classList.contains('end')){
+        alert("we have a winner ! ")
         break;
       }
     }
