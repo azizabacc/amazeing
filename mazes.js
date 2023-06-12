@@ -105,11 +105,14 @@ let main = document.querySelector("main");
 main.style.display="flex";
 let mazeContainer = document.createElement("div");
 mazeContainer.id = "mazeContainer";
+//let playButton = document.createElement('div');
+//playButton.style.backgroundImage ="url(images/startButton.png)"
 let player = document.createElement("div");
 player.classList.add("player");
 
 player.style.backgroundImage = "url(images/aziza.png)";
 main.appendChild(mazeContainer);
+
 
 
 // Call the createMaze function to generate the maze
