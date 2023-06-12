@@ -1,5 +1,6 @@
 import { LEVEL_1, LEVEL_2, LEVEL_3 } from './levels.js';
 let indexlevel = 1;
+let LEVEL =[];
 const switchClass=(element1, element2)=> {
   const tempClass = element1.className;
   element1.className = element2.className;
@@ -21,9 +22,13 @@ const styleMaze = (map, LIST) => {
 };
 
 const createMaze = (LIST)=> {
+
   styleMaze(mazeContainer, LIST);
   for (let i = 0; i < LIST.length; i++) {
+    LEVEL[i] = LIST[i].slice();
     for (let j = 0; j < LIST[i].length; j++) {
+
+      console.log(LEVEL)
       const cell = document.createElement("div");
 
       if (LIST[i][j] === "*") {
@@ -45,20 +50,7 @@ const createMaze = (LIST)=> {
       mazeContainer.appendChild(cell);
     }
   }
-}
-// move function eventlistener
-const moveEventListener=(LEVEL) =>{
-  document.addEventListener("keydown", function(event) {
-    if (event.code === "ArrowRight") {
-      move(1);
-    } else if (event.code === "ArrowLeft") {
-      move(-1);
-    } else if (event.code === "ArrowDown") {
-      move(LEVEL[0].length);
-    } else if (event.code === "ArrowUp") {
-      move(-LEVEL[0].length);
-    }
-  });
+
 }
 //move function
 function move(offset) {
@@ -73,27 +65,40 @@ function move(offset) {
     } else if (currentCell.classList.contains('player') && nextCell.classList.contains('end')) {
       alert("we have a winner!");
       indexlevel++;
-      console.log(indexlevel);
-      if (indexlevel === 2) {
+      if(indexlevel==2){
         while (mazeContainer.firstChild) {
           mazeContainer.removeChild(mazeContainer.firstChild);
         }
-        console.log("mazeContainer.firstChild"+mazeContainer.firstChild);
+        console.log("container children : ", mazeContainer.children);
         createMaze(LEVEL_2);
-        moveEventListener(LEVEL_2);
-      
-        console.log("mazeContainer.children.length : " + mazeContainer.children.length);
-        console.log("element of the list : "+LEVEL_2.length*LEVEL_2[0].length)
-      } else if (indexlevel === 3) {
+  
+      }
+      if(indexlevel==3){
         while (mazeContainer.firstChild) {
           mazeContainer.removeChild(mazeContainer.firstChild);
         }
+        console.log("container children : ", mazeContainer.children);
         createMaze(LEVEL_3);
-        moveEventListener(LEVEL_3);
+  
       }
+
+      
     }
   }
 }
+// move function eventlistener
+const moveEventListener=(event) =>{
+    if (event.code === "ArrowRight") {
+      move(1);
+    } else if (event.code === "ArrowLeft") {
+      move(-1);
+    } else if (event.code === "ArrowDown") {
+      move(LEVEL[0].length);
+    } else if (event.code === "ArrowUp") {
+      move(-LEVEL[0].length);
+    }
+}
+
 
 
 let main = document.querySelector("main");
@@ -108,8 +113,8 @@ main.appendChild(mazeContainer);
 
 
 // Call the createMaze function to generate the maze
-createMaze(LEVEL_1);
-moveEventListener(LEVEL_1);
+createMaze(LEVEL_1)
+document.addEventListener("keydown", moveEventListener);
 
 
 
