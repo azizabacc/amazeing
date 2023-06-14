@@ -8,7 +8,7 @@ const getElapsedTime = (start) => {
 let audioContainer = document.createElement('div');
 let audio = document.createElement('audio');
 audio.controls = true;
-audio.autoplay = true;
+audio.autoplay = false;
 audio.textContent = 'Your browser does not support the audio file.';
 let audioSource = document.createElement('source');
 audioSource.src="audio/level1.mp3"
@@ -25,7 +25,7 @@ const switchClass = (element1, element2) => {
 
 const updatePlayerPosition = (i, offset, folder) => {
   mazeContainer.children[i].style.backgroundImage = "url(images/" + folder + "/green.png)";
-  mazeContainer.children[i + offset].style.backgroundImage = "url(images/aziza.png)";
+  mazeContainer.children[i + offset].style.backgroundImage = "url(images/" + folder + "/aziza.png)";
 };
 
 const styleMaze = (map, LIST) => {
@@ -59,7 +59,7 @@ const createMaze = (LIST, folder, startTime) => {
       } else if (LIST[i][j] === "S") {
         cell.textContent = `(${i},${j})`;
         cell.classList.add("player");
-        cell.style.backgroundImage = "url(images/aziza.png)";
+        cell.style.backgroundImage = "url(images/" + folder + "/aziza.png)";
       } else if (LIST[i][j] === "T") {
         cell.textContent = `(${i},${j})`;
         cell.classList.add("end");
@@ -135,9 +135,14 @@ main.style.display = "flex";
 main.style.alignItems = "center";
 main.style.justifyContent = "center";
 main.style.flexDirection ="column";
+main.style.width ="1276px";
 //header div
 let headerGame = document.createElement('div');
 headerGame.style.display = 'flex';
+headerGame.style.alignItems ='center';
+headerGame.style.width="100%";
+headerGame.style.justifyContent = "space-around";
+
 // timer div
 let timerDiv = document.createElement("div");
 timerDiv.id = "timer";
