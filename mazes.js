@@ -113,7 +113,7 @@ const moveEventListener=(event) =>{
 
 
 let main = document.querySelector("main");
-document.body.style.backgroundImage="url(images/UI/black.png"
+document.body.style.backgroundImage="url(images/UI/black.png)"
 
 main.setAttribute("style",'');
 main.style.display="flex";
