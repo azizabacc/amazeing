@@ -178,13 +178,29 @@ for (let i = 0; i < palette.children.length; i++) {
 
 let main = document.querySelector("main");
 main.style.display = "flex";
+//change world topic
+let changeWorld = document.createElement("p");
+changeWorld.textContent="Change WORLD";
+changeWorld.style.backgroundColor = "#077bc2";
+changeWorld.style.borderRadius ="10px";
+changeWorld.style.textAlign ="center";
+changeWorld.style.fontSize ="40px";
+changeWorld.style.fontWeight="bold";
+changeWorld.style.color ="white";
 
-
+const worldChanger =() =>{
+  path.style.backgroundImage='url(green.png)';
+  start.style.backgroundImage='url(start.png)';
+  end.style.backgroundImage='url(end.png)';
+}
+changeWorld.addEventListener("click", worldChanger);
 menu.appendChild(columnNb);
 menu.appendChild(rowNb);
 menu.appendChild(submitBtn);
 menu.appendChild(palette);
+menu.appendChild(changeWorld);
 menu.appendChild(saveBtn);
+
 menu.style.display = "flex";
 menu.style.flexDirection = "column";
 

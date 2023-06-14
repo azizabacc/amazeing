@@ -1,4 +1,4 @@
-import { LEVEL_1, LEVEL_2, LEVEL_3 } from './levels.js';
+import { LEVEL_1, LEVEL_2, LEVEL_3 ,LEVEL_4} from './levels.js';
 let indexlevel = 1;
 let LEVEL =[];
 const switchClass=(element1, element2)=> {
@@ -17,26 +17,26 @@ const styleMaze = (map, LIST) => {
   map.style.gridTemplateColumns = `repeat(${LIST[0].length}, 64px)`;
   map.style.gridTemplateRows = `repeat(${LIST.length}, 64px)`;
   map.style.gap = "1px";
-  map.style.backgroundColor = "yellow";
+  map.style.backgroundColor = "#6afffc";
   map.style.width = "fit-content";
 };
 
-const createMaze = (LIST)=> {
+const createMaze = (LIST,folder)=> {
 
   styleMaze(mazeContainer, LIST);
   for (let i = 0; i < LIST.length; i++) {
     LEVEL[i] = LIST[i].slice();
     for (let j = 0; j < LIST[i].length; j++) {
-
-      console.log(LEVEL)
       const cell = document.createElement("div");
+      cell.style.borderRadius = "10px";
 
       if (LIST[i][j] === "*") {
         cell.textContent=`(${i},${j})`;
-        cell.classList.add("wall");
+        cell.classList.backgroundImage = "url(../images/res0/blue.png)";
+        console.log("images/"+folder+"/blue.png");
       } else if (LIST[i][j] === ".") {
         cell.textContent=`(${i},${j})`;
-        cell.classList.add("path");
+        cell.classList.backgroundImage = "url(images/"+folder+"/green.png)";
       } else if (LIST[i][j] === "S") {
         cell.textContent=`(${i},${j})`;
         cell.classList.add("player");
@@ -44,7 +44,7 @@ const createMaze = (LIST)=> {
       } else if (LIST[i][j] === "T") {
         cell.textContent=`(${i},${j})`;
         cell.classList.add("end");
-        cell.style.backgroundImage = "url(images/end.png)";
+        cell.style.backgroundImage = "url(images/"+folder+"/end.png)";
       }
 
       mazeContainer.appendChild(cell);
@@ -70,7 +70,7 @@ function move(offset) {
           mazeContainer.removeChild(mazeContainer.firstChild);
         }
         console.log("container children : ", mazeContainer.children);
-        createMaze(LEVEL_2);
+        createMaze(LEVEL_2,"res1");
   
       }
       if(indexlevel==3){
@@ -78,7 +78,15 @@ function move(offset) {
           mazeContainer.removeChild(mazeContainer.firstChild);
         }
         console.log("container children : ", mazeContainer.children);
-        createMaze(LEVEL_3);
+        createMaze(LEVEL_3,"res2");
+  
+      }
+      if(indexlevel==4){
+        while (mazeContainer.firstChild) {
+          mazeContainer.removeChild(mazeContainer.firstChild);
+        }
+        console.log("container children : ", mazeContainer.children);
+        createMaze(LEVEL_4,"res2");
   
       }
 
@@ -116,7 +124,7 @@ main.appendChild(mazeContainer);
 
 
 // Call the createMaze function to generate the maze
-createMaze(LEVEL_1)
+createMaze(LEVEL_1,"res0")
 document.addEventListener("keydown", moveEventListener);
 
 
