@@ -113,7 +113,12 @@ const moveEventListener=(event) =>{
 
 
 let main = document.querySelector("main");
+document.body.style.backgroundImage="url(images/UI/black.png"
+
+main.setAttribute("style",'');
 main.style.display="flex";
+main.style.alignItems ="center";
+main.style.justifyContent ="center";
 let mazeContainer = document.createElement("div");
 mazeContainer.id = "mazeContainer";
 //let playButton = document.createElement('div');
