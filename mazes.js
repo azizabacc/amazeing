@@ -8,7 +8,7 @@ const getElapsedTime = (start) => {
 let audioContainer = document.createElement('div');
 let audio = document.createElement('audio');
 audio.controls = true;
-audio.autoplay = false;
+audio.autoplay = true;
 audio.textContent = 'Your browser does not support the audio file.';
 let audioSource = document.createElement('source');
 audioSource.src="audio/level1.mp3"
@@ -35,9 +35,64 @@ const styleMaze = (map, LIST) => {
   map.style.gap = "1px";
   map.style.backgroundColor = "#6afffc";
   map.style.width = "fit-content";
+  map.style.border='13px groove rgba(37,24,2,0.61)';
+  
 };
 
 let start = 0;
+let isLevelComplete = false;
+const showWinningMessage = () => {
+  if (!isLevelComplete) {
+    return;
+  }
+  //const mazeCenterX = mazeContainer.offsetWidth / 5 ;
+  //const mazeCenterY = mazeContainer.offsetHeight / 5;
+  const mazeCenterY = 100;
+  const mazeCenterX = 300;
+  const coinDiv = document.createElement('div');
+  coinDiv.classList.add('coin');
+  coinDiv.style.position = 'absolute';
+  coinDiv.style.display ='flex';
+  coinDiv.style.flexDirection ='column';
+  coinDiv.style.height="558px";
+  coinDiv.style.justifyContent ="flex-end"
+  coinDiv.style.alignItems ="center ";
+  coinDiv.style.top = `${mazeCenterY}px`;
+  coinDiv.style.left = `${mazeCenterX}px`;
+
+  const message = document.createElement('p');
+  message.textContent=" winner";
+  message.style.textAlign ='center';
+  message.style.fontSize ="200px";
+  message.style.marginBottom ='307px'
+  message.style.color= "red";
+  coinDiv.appendChild(message)
+
+  const coinFrontDiv = document.createElement('div');
+  coinFrontDiv.classList.add('coin__front');
+  coinDiv.appendChild(coinFrontDiv);
+
+  const coinEdgeDiv = document.createElement('div');
+  coinEdgeDiv.classList.add('coin__edge');
+  coinDiv.appendChild(coinEdgeDiv);
+
+  const coinBackDiv = document.createElement('div');
+  coinBackDiv.classList.add('coin__back');
+  coinDiv.appendChild(coinBackDiv);
+
+  const coinShadowDiv = document.createElement('div');
+  coinShadowDiv.classList.add('coin__shadow');
+  coinDiv.appendChild(coinShadowDiv);
+
+
+  mazeContainer.appendChild(coinDiv);
+  coinDiv.addEventListener('click', () => {
+    mazeContainer.removeChild(coinDiv);
+    indexlevel++;
+    isLevelComplete=false;
+    console.log("indexlevel :"+indexlevel);
+  });
+};
 
 const createMaze = (LIST, folder, startTime) => {
   styleMaze(mazeContainer, LIST);
@@ -84,9 +139,13 @@ function move(offset) {
       break;
     } else if (currentCell.classList.contains('player') && nextCell.classList.contains('end')) {
       console.log(getElapsedTime(start));
-      alert("we have a winner! ");
-      indexlevel++;
-      if (indexlevel == 2) {
+      
+      isLevelComplete = true;
+      showWinningMessage();
+
+      //indexlevel++;
+     if (indexlevel == 2) {
+     
         folder = "res1";
         audioSource.src="audio/level2.mp3"
         audio.load(); // Recharge la source audio
@@ -94,6 +153,11 @@ function move(offset) {
           mazeContainer.removeChild(mazeContainer.firstChild);
         }
         createMaze(LEVEL_2, folder, Date.now());
+        if (currentCell.classList.contains('player') && nextCell.classList.contains('end')) {
+          console.log(getElapsedTime(start));
+          
+    
+        }
       }
       if (indexlevel == 3) {
         folder = "res2";
