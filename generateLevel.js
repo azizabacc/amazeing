@@ -1,9 +1,11 @@
+
 const updatePalette = () =>{
   path.style.backgroundImage='url(images/'+folder+'/green.png)';
   start.style.backgroundImage = 'url(images/'+folder+'/start.png)';
   end.style.backgroundImage = 'url(images/'+folder+'/end.png)';
 }
 let folder ="res0";
+document.body.style.backgroundImage='url(images/'+folder+'/aziza.png)'
 function dragOver (e) {
   console.log("dragOver");
   e.preventDefault();
@@ -51,7 +53,7 @@ const styleMaze = (map, columnCount, rowCount) =>{
     map.style.gridTemplateColumns = `repeat(${columnCount}, 64px)`;
     map.style.gridTemplateRows = `repeat(${rowCount}, 64px)`;
     map.style.gap = "1px";
-    map.style.backgroundColor = "yellow";
+
     map.style.width = "fit-content";
   }
   
@@ -85,17 +87,22 @@ let menu = document.createElement("div");
 
 //select world
 let world = document.createElement("select")
+world.style.width = "60%";
+world.style.fontSize ="30px"
 let labelWorld =document.createElement('label');
 labelWorld.setAttribute('for', 'world');
 labelWorld.innerText =" Select The World"
 let world1 = document.createElement("option");
 world1.setAttribute('value', '0');
+world1.style.backgroundColor ="#376915";
 world1.innerText = 'Earth';
 let world2 = document.createElement("option");
 world2.setAttribute('value', '1');
+world2.style.backgroundColor ="blue";
 world2.innerText = 'Ice';
 let world3 = document.createElement("option");
 world3.setAttribute('value', '2');
+world3.style.backgroundColor ="red";
 world3.innerText = 'Fire';
 world.appendChild(world1);
 world.appendChild(world2);
@@ -107,18 +114,15 @@ world.onchange = function(){
   if(worldSelected =="0"){
       folder = "res0";
       updatePalette();
-      document.body.style.backgroundColor="black";
-      document.body.style.color = "white"; 
+      document.body.style.backgroundImage='url(images/'+folder+'/aziza.png)'
   }else if(worldSelected =="1"){
     folder = "res1";
     updatePalette();
-      document.body.style.backgroundColor="white";
-      document.body.style.color = "black"; 
+    document.body.style.backgroundImage='url(images/'+folder+'/aziza.png)'
   }else if(worldSelected =="2"){
     folder = "res2";
     updatePalette();
-    document.body.style.backgroundColor="white";
-    document.body.style.color = "black"; 
+    document.body.style.backgroundImage='url(images/'+folder+'/aziza.png)'
 }
 }
 //input column and row values
@@ -126,6 +130,8 @@ let columnNb = document.createElement("input");
 let labelColumnNb = document.createElement('label');
 labelColumnNb.setAttribute('for', 'colomnNb');
 labelColumnNb.innerText = 'Number of columns';
+columnNb.style.width = "60%";
+columnNb.style.fontSize ="30px"
 columnNb.type = "number";
 columnNb.id = "columnNb";
 
@@ -133,17 +139,22 @@ let rowNb = document.createElement("input");
 let labelRowNb = document.createElement('label');
 labelRowNb.setAttribute('for', 'rowNb');
 labelRowNb.innerText = 'Number of rows';
+rowNb.style.width = "60%";
+rowNb.style.fontSize ="30px"
 rowNb.type = "number";
 rowNb.id = "rowNb";
 
 // botton to generate maze
 let submitBtn = document.createElement("button");
 submitBtn.textContent = "Generate Maze";
+submitBtn.style.fontSize ="30px"
 submitBtn.addEventListener("click", generateGrid);
 
 // palette of divisions
 let palette = document.createElement("div");
 palette.style.display = "flex";
+palette.style.width =  "100%";
+palette.style.justifyContent= "space-around" ;
 
 
 
@@ -232,10 +243,12 @@ for (let i = 0; i < palette.children.length; i++) {
 }
 
 let main = document.querySelector("main");
+main.style.backgroundImage= "url(images/UI/black.png)";
 main.style.display = "flex";
 main.style.flexDirection ="row";
 main.style.width ="auto";
-main.style.fontFamily ="'Kablammo', cursive";
+main.style.height ="100vh";
+main.style.border='13px groove rgba(37,24,2,0.61)'
 //change world topic
 let changeWorld = document.createElement("p");
 changeWorld.textContent="Change WORLD";
@@ -266,8 +279,11 @@ menu.appendChild(saveBtn);
 menu.style.display = "flex";
 menu.style.flexDirection = "column";
 menu.style.alignItems ="center";
+menu.style.color="white";
+menu.style.fontFamily="Bungee Spice', cursive"
+menu.style.fontSize ="40px"
+menu.style.padding="20px";
+menu.style.justifyContent =  "space-between";
 
 main.appendChild(mazeTab);
 main.appendChild(menu);
-
-main.appendChild(mazeEditor);
