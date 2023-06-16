@@ -1,4 +1,5 @@
-
+document.body.style.justifyContent=  "center";
+document.body.style.alignItems ='center';
 const updatePalette = () =>{
   path.style.backgroundImage='url(images/'+folder+'/green.png)';
   start.style.backgroundImage = 'url(images/'+folder+'/start.png)';
@@ -26,8 +27,11 @@ function drop(e) {
   const draggableElement = document.getElementById(draggableId);
   
   if (draggableElement) {
+    const newId = draggableElement.id; // take the id of the lelected div of the palette
     this.style.backgroundImage = draggableElement.style.backgroundImage;
     this.classList.remove("hovered");
+    //the div of the grid append the id of the div of the palette
+    this.id = newId;
 
     // delete the div at that position
     while (this.firstChild) {
@@ -37,6 +41,7 @@ function drop(e) {
     // add the selected div from the palette to the grid
     const cell = document.createElement("div");
     cell.style.backgroundImage = draggableElement.style.backgroundImage;
+    cell.id = newId;
     cell.addEventListener("dragover", dragOver);
     cell.addEventListener("dragenter", dragEnter);
     cell.addEventListener("dragleave", dragLeave);
@@ -68,6 +73,7 @@ const generateGrid = ()=> {
           for (let j = 0; j < columnCount; j++) {
               const cell = document.createElement("div");
               cell.style.backgroundImage = 'url(images/'+folder+'/blue.png)';
+              cell.id='wall';
               cell.addEventListener("dragover", dragOver);
               cell.addEventListener("dragenter", dragEnter);
               cell.addEventListener("dragleave", dragLeave);
@@ -88,20 +94,32 @@ let menu = document.createElement("div");
 //select world
 let world = document.createElement("select")
 world.style.width = "60%";
-world.style.fontSize ="30px"
+world.style.backgroundColor="rgba(37,24,2,0.61)"
+world.style.border='13px groove rgba(37,24,2,0.61)'
+world.style.color="blanchedalmond";
+world.style.fontWeight="bold";
+world.style.padding="10px";
+world.style.fontSize ="25px"
 let labelWorld =document.createElement('label');
 labelWorld.setAttribute('for', 'world');
 labelWorld.innerText =" Select The World"
 let world1 = document.createElement("option");
 world1.setAttribute('value', '0');
 world1.style.backgroundColor ="#376915";
+world1.style.color='pink';
+
 world1.innerText = 'Earth';
 let world2 = document.createElement("option");
 world2.setAttribute('value', '1');
-world2.style.backgroundColor ="blue";
+
+world2.style.backgroundColor ="#9ff3d3";
+world2.style.color='bleu';
+
 world2.innerText = 'Ice';
 let world3 = document.createElement("option");
 world3.setAttribute('value', '2');
+world3.style.color ="yellow";
+
 world3.style.backgroundColor ="red";
 world3.innerText = 'Fire';
 world.appendChild(world1);
@@ -130,30 +148,62 @@ let columnNb = document.createElement("input");
 let labelColumnNb = document.createElement('label');
 labelColumnNb.setAttribute('for', 'colomnNb');
 labelColumnNb.innerText = 'Number of columns';
-columnNb.style.width = "60%";
-columnNb.style.fontSize ="30px"
+columnNb.style.padding="10px";
+
+columnNb.style.fontSize ="25px"
+columnNb.style.backgroundColor="rgba(37,24,2,0.61)"
+columnNb.style.border='13px groove rgba(37,24,2,0.61)'
+columnNb.style.color="blanchedalmond";
+columnNb.setAttribute('min','3');
 columnNb.type = "number";
 columnNb.id = "columnNb";
 
 let rowNb = document.createElement("input");
 let labelRowNb = document.createElement('label');
 labelRowNb.setAttribute('for', 'rowNb');
+rowNb.setAttribute('min','3');
 labelRowNb.innerText = 'Number of rows';
-rowNb.style.width = "60%";
-rowNb.style.fontSize ="30px"
+rowNb.style.fontSize ="25px"
+rowNb.style.padding="10px";
+
+rowNb.style.backgroundColor="rgba(37,24,2,0.61)"
+rowNb.style.border='13px groove rgba(37,24,2,0.61)'
+rowNb.style.color="blanchedalmond";
 rowNb.type = "number";
 rowNb.id = "rowNb";
+//style labels
+labelWorld.style.fontSize ="20px";
+labelWorld.style.color="#e7cdcd";
+labelWorld.style.fontWeight="bold";
+labelWorld.style.fontStyle ="italic";
+labelWorld.style.textAlign ='center';
+
+labelColumnNb.style.fontSize ="20px";
+labelColumnNb.style.color="#e7cdcd";
+labelColumnNb.style.fontWeight="bold";
+labelColumnNb.style.fontStyle ="italic";
+labelColumnNb.style.textAlign ='center';
+
+labelRowNb.style.fontSize ="20px";
+labelRowNb.style.color="#e7cdcd";
+labelRowNb.style.fontWeight="bold";
+labelRowNb.style.fontStyle ="italic";
+labelRowNb.style.textAlign ='center';
 
 // botton to generate maze
 let submitBtn = document.createElement("button");
 submitBtn.textContent = "Generate Maze";
-submitBtn.style.fontSize ="30px"
+submitBtn.style.marginTop = '15px';
+submitBtn.style.fontSize ="25px"
+submitBtn.style.backgroundColor="rgba(37,24,2,0.61)"
+submitBtn.style.border='13px groove rgba(37,24,2,0.61)'
+submitBtn.style.color="blanchedalmond";
+submitBtn.style.cursor ="pointer";
 submitBtn.addEventListener("click", generateGrid);
 
 // palette of divisions
 let palette = document.createElement("div");
 palette.style.display = "flex";
-palette.style.width =  "100%";
 palette.style.justifyContent= "space-around" ;
 
 
@@ -174,14 +224,13 @@ palette.appendChild(start);
 palette.appendChild(end);
 palette.appendChild(path);
 
+//save maze btn
 let saveBtn = document.createElement("p");
 saveBtn.textContent = "SAVE";
-saveBtn.style.backgroundColor = "#077bc2";
-saveBtn.style.borderRadius ="10px";
-saveBtn.style.textAlign ="center";
-saveBtn.style.fontSize ="40px";
-saveBtn.style.fontWeight="bold";
-saveBtn.style.color ="white";
+
+
+
+
 let maze = [];
 // Save maze 
 const saveMaze = () => {
@@ -226,6 +275,21 @@ const saveMaze = () => {
 };
 saveBtn.addEventListener("click", saveMaze);
 
+//Quit btn
+quitBtn = document.createElement('div');
+quitBtn.textContent = "QUIT";
+
+//quitbtn eventlistner 
+quitBtn.addEventListener('click', () => {
+  console.log("quit");
+  exitDialogue="Don't forget to save your map Nigga !"
+  if(confirm(exitDialogue)==true){
+    window.close();
+  }
+
+
+});
+
 function dragStart(e) {
   this.classList.add("dragging");
   e.dataTransfer.setData("text/plain", this.id);
@@ -245,26 +309,66 @@ for (let i = 0; i < palette.children.length; i++) {
 let main = document.querySelector("main");
 main.style.backgroundImage= "url(images/UI/black.png)";
 main.style.display = "flex";
+main.style.fontFamily ="'Chakra Petch', sans-serif"
+main.style.justifyContent='space-evenly';
 main.style.flexDirection ="row";
-main.style.width ="auto";
-main.style.height ="100vh";
+main.style.width ="100vw";
+main.style.height ="auto";
 main.style.border='13px groove rgba(37,24,2,0.61)'
 //change world topic
 let changeWorld = document.createElement("p");
 changeWorld.textContent="Change WORLD";
-changeWorld.style.backgroundColor = "#077bc2";
-changeWorld.style.borderRadius ="10px";
-changeWorld.style.textAlign ="center";
-changeWorld.style.fontSize ="40px";
-changeWorld.style.fontWeight="bold";
-changeWorld.style.color ="white";
 
 const worldChanger =() =>{
-  path.style.backgroundImage='url(green.png)';
-  start.style.backgroundImage='url(start.png)';
-  end.style.backgroundImage='url(end.png)';
+  if(folder=='res0'){
+    folder='res1';
+  }else if(folder=='res1'){
+    folder='res2';
+  }else if(folder=='res2'){
+    folder='res0';
+  }
+  for (let tile of mazeTab.children) {
+    switch(tile.id){
+      case 'wall' : 
+      tile.style.backgroundImage='url("images/'+folder+'/blue.png")';
+      break;
+      case 'path' :
+      tile.style.backgroundImage='url("images/'+folder+'/green.png")';
+      break;
+      case 'start' :
+        tile.style.backgroundImage='url("images/'+folder+'/start.png")';
+        break;
+        case 'end' :
+          tile.style.backgroundImage='url("images/'+folder+'/end.png")';
+          break;
+          default:
+            console.log(ERROR);
+    }
+
+  }
+  updatePalette();
+  document.body.style.backgroundImage='url(images/'+folder+'/aziza.png)'
+
+
 }
 changeWorld.addEventListener("click", worldChanger);
+let buttons = document.createElement('div');
+
+buttons.appendChild(palette);
+buttons.appendChild(changeWorld)
+buttons.appendChild(saveBtn);
+buttons.appendChild(quitBtn);
+for(let btn of buttons.children){
+  btn.style.padding ='10px';
+  btn.style.fontFamily ='25px';
+  btn.style.backgroundColor="rgba(37,24,2,0.61)"
+  btn.style.border='13px groove rgba(37,24,2,0.61)'
+  btn.style.fontWeight="bold";
+  btn.style.fontSize ="25px";
+  btn.style.textAlign ="center";
+  btn.style.color ="blanchedalmond";
+  btn.style.cursor="pointer";
+}
 menu.appendChild(labelWorld);
 menu.appendChild(world);
 menu.appendChild(labelColumnNb);
@@ -272,18 +376,17 @@ menu.appendChild(columnNb);
 menu.appendChild(labelRowNb);
 menu.appendChild(rowNb);
 menu.appendChild(submitBtn);
-menu.appendChild(palette);
-menu.appendChild(changeWorld);
-menu.appendChild(saveBtn);
 
 menu.style.display = "flex";
 menu.style.flexDirection = "column";
-menu.style.alignItems ="center";
-menu.style.color="white";
-menu.style.fontFamily="Bungee Spice', cursive"
-menu.style.fontSize ="40px"
-menu.style.padding="20px";
-menu.style.justifyContent =  "space-between";
+menu.style.padding="10px";
+for(let btn of menu.children){
+ btn.style.width="246px"
+}
+rowNb.style.width="200px"
+columnNb.style.width="200px"
 
-main.appendChild(mazeTab);
 main.appendChild(menu);
+main.appendChild(mazeTab);
+main.appendChild(buttons);
+

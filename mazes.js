@@ -8,7 +8,7 @@ const getElapsedTime = (start) => {
 let audioContainer = document.createElement('div');
 let audio = document.createElement('audio');
 audio.controls = true;
-audio.autoplay = false;
+audio.autoplay = true;
 audio.textContent = 'Your browser does not support the audio file.';
 let audioSource = document.createElement('source');
 audioSource.src="audio/level1.mp3"
