@@ -1,9 +1,10 @@
 import { LEVEL_1, LEVEL_2, LEVEL_3 ,LEVEL_4} from './levels.js';
 
-// Fonction pour calculer le temps écoulé
+// timer
 const getElapsedTime = (start) => {
   return Number((Date.now() - start) / 1000).toFixed(2) + 's';
 };
+
 //music div 
 let audioContainer = document.createElement('div');
 let audio = document.createElement('audio');
@@ -64,6 +65,14 @@ const createMaze = (LIST, folder, startTime) => {
         cell.textContent = `(${i},${j})`;
         cell.classList.add("end");
         cell.style.backgroundImage = "url(images/" + folder + "/end.png)";
+      } else if (LIST[i][j] === "E") {
+        cell.textContent = `(${i},${j})`;
+        cell.classList.add("tower");
+        cell.style.backgroundImage = "url(images/" + folder + "/paveTower.png)";
+        let gun = document.createElement('img');
+        gun.src ="images/" + folder + "/towerGun.png";
+        gun.classList.add("towerGun"); 
+        cell.appendChild(gun);
       }
 
       mazeContainer.appendChild(cell);
@@ -89,7 +98,7 @@ function move(offset) {
       if (indexlevel == 2) {
         folder = "res1";
         audioSource.src="audio/level2.mp3"
-        audio.load(); // Recharge la source audio
+        audio.load(); // reload audio
         while (mazeContainer.firstChild) {
           mazeContainer.removeChild(mazeContainer.firstChild);
         }
@@ -98,7 +107,7 @@ function move(offset) {
       if (indexlevel == 3) {
         folder = "res2";
         audioSource.src="audio/level3.mp3"
-        audio.load(); // Recharge la source audio
+        audio.load(); // reload audio
         while (mazeContainer.firstChild) {
           mazeContainer.removeChild(mazeContainer.firstChild);
         }
@@ -115,6 +124,32 @@ function move(offset) {
   }
 }
 
+const moveTowerGun = () => {
+  const towerGun = document.querySelector('.towerGun');
+  const playerCell = document.querySelector('.player');
+  const playerRect = playerCell.getBoundingClientRect();
+  const playerX = playerRect.left;
+  const playerY = playerRect.top;
+
+  const mainWidth = mazeContainer.offsetWidth;
+  const mainHeight = mazeContainer.offsetHeight;
+  
+  const currentRect = towerGun.getBoundingClientRect();
+  const currentLeft = currentRect.left;
+  const currentTop = currentRect.top;
+
+  const newLeft = currentLeft + (playerX - currentLeft) ; 
+  const newTop = currentTop + (playerY - currentTop) ; 
+
+  if (newLeft >= 0 && newLeft <= mainWidth - 32 && newTop >= 0 && newTop <= mainHeight - 59) {
+    towerGun.style.left = newLeft.toString() + 'px';
+    towerGun.style.top = newTop.toString() + 'px';
+  }
+};
+
+
+
+
 const moveEventListener = (event) => {
   if (event.code === "ArrowRight") {
     move(1);
@@ -125,6 +160,7 @@ const moveEventListener = (event) => {
   } else if (event.code === "ArrowUp") {
     move(-LEVEL[0].length);
   }
+  moveTowerGun();
 };
 
 let main = document.querySelector("main");
@@ -160,7 +196,6 @@ mazeContainer.id = "mazeContainer";
 main.appendChild(headerGame);
 main.appendChild(mazeContainer);
 
-
 // repeatedly call the updateTimer function at regular intervals. 
 //In this case, updateTimer is called every 1000 milliseconds, which is every second.
 setInterval(updateTimer, 1000);
@@ -173,3 +208,5 @@ function updateTimer() {
 
 createMaze(LEVEL_1, folder, Date.now());
 document.addEventListener("keydown", moveEventListener);
+
+

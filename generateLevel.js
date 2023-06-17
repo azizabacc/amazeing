@@ -274,7 +274,12 @@ const saveMaze = () => {
   a.click();
 };
 saveBtn.addEventListener("click", saveMaze);
+//start menu btn
+let startmenu = document.createElement('div');
+startmenu.textContent='START MENU';
+startmenu.addEventListener('click', ()=>{
 
+});
 //Quit btn
 quitBtn = document.createElement('div');
 quitBtn.textContent = "QUIT";
@@ -357,6 +362,7 @@ let buttons = document.createElement('div');
 buttons.appendChild(palette);
 buttons.appendChild(changeWorld)
 buttons.appendChild(saveBtn);
+buttons.appendChild(startmenu);
 buttons.appendChild(quitBtn);
 for(let btn of buttons.children){
   btn.style.padding ='10px';

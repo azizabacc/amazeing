@@ -83,9 +83,8 @@ startButton.src = "images/UI/startButton.png";
 startButton.style.width ='fit-content';
 startButton.style.cursor = 'pointer';
 //startbutton eventlistner
-//editbutton eventlistner
 startButton.addEventListener('click', () => {
-    // Charger et exécuter le fichier "generateLevel.js"
+
     const script = document.createElement('script');
     script.src = 'mazes.js';
     script.type ='module';
@@ -101,7 +100,7 @@ editButton.style.width ='fit-content';
 editButton.style.cursor = 'pointer';
 //editbutton eventlistner
 editButton.addEventListener('click', () => {
-    // Charger et exécuter le fichier "generateLevel.js"
+    // open"generateLevel.js"
     const script = document.createElement('script');
     script.src = 'generateLevel.js';
     main.innerHTML ='';

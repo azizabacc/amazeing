@@ -7,3 +7,7 @@
 
 }
 */
+.towerGun {
+    position: absolute;
+    transition: left 2s ease, top 2s ease;
+  }
